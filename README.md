@@ -1,2 +1,2 @@
 # yahcal
-site: https://jack-cedar.github.io/yahcal/yahcal.html
+site: https://jack-cedar.github.io/yahcal/public/yahcal.html
