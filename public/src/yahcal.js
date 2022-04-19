@@ -1,10 +1,21 @@
-function newCanvas(width, height, background) {
+function newCanvas(width, height) {
     this.canvas = document.createElement("canvas");
     this.canvas.width = width
     this.canvas.height = height
-    this.canvas.style.backgroundColor = background
     this.canvas.ctx = this.canvas.getContext('2d')
     document.body.appendChild(this.canvas)
+}
+function existingCanvas(id) {
+    this.canvas = document.getElementById(id)
+    this.canvas.ctx = this.canvas.getContext('2d')
+}
+function background(colour) {
+    canvas.style.backgroundColor = colour
+} 
+function border(colour, style, widthpx) {
+    canvas.style.borderStyle = style
+    canvas.style.borderColor = colour
+    canvas.style.borderWidth = widthpx+"px"
 }
 function ellipse(x, y, width, height) {
     canvas.ctx.beginPath
@@ -34,5 +45,21 @@ function rect2p(x1, y1, x2, y2) {
     canvas.ctx.beginPath()
     canvas.ctx.rect(x1, y1, x2 - x1, y2 - y1)
 }
-newCanvas(800, 600, "black")
-draw("red")
+function square(x, y, size) {
+    canvas.ctx.beginPath()
+    canvas.ctx.rect(x, y, size, size)
+}
+function pixel(x, y, colour) {
+    square(x, y, 1)
+    fill(colour)
+}
+function line(x1, y1, x2, y2) {
+    canvas.ctx.beginPath()
+    canvas.ctx.moveTo(x1, y1)
+    canvas.ctx.lineTo(x2, y2)
+}
+function clear() {
+    canvas.ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+
