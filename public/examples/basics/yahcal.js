@@ -1,6 +1,8 @@
 // creates a new canvas element with the given width and height
-function newCanvas(width, height) {
+function newCanvas(width, height, id) {
+    this.id = id || 0
     this.canvas = document.createElement("canvas");
+    this.canvas.id = id
     this.canvas.width = width
     this.canvas.height = height
     this.canvas.ctx = this.canvas.getContext('2d')
@@ -81,7 +83,6 @@ function pointPath(points) {
     for (var i = 1; i < points.length; i++) {
             canvas.ctx.lineTo(points[i][0], points[i][1])
     }
-    canvas.ctx.lineTo(points[0][0], points[0][1])
 }
 // creates a circle with any number of sides
 function customCircle(x, y, sides, radius) {
@@ -91,13 +92,4 @@ function customCircle(x, y, sides, radius) {
         points.push([x + radius * Math.cos(angle), y + radius * Math.sin(angle)])
     }
     pointPath(points)
-}
-// basic text writing funtion, NEEDS WORK!!!!!
-function write(text, size, x, y, font) {
-    this.x = x || 5
-    this.y = y || 30
-    this.size = size || 30
-    canvas.ctx.font = font || this.size+"px Arial"
-    console.log(canvas.ctx.font)
-    canvas.ctx.fillText(text, this.x, this.y)
 }
