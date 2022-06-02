@@ -1,9 +1,10 @@
 // creates a new canvas element with the given width and height
-function newCanvas(width, height) {
+function NewCanvas(width, height) {
     this.canvas = document.createElement("canvas");
     this.canvas.width = width
     this.canvas.height = height
     this.canvas.ctx = this.canvas.getContext('2d')
+    
     document.body.appendChild(this.canvas)
 }
 // incorperates an existing canvas
@@ -13,7 +14,8 @@ function existingCanvas(id) {
 }
 // changes the background colour of the canvas
 function background(colour) {
-    canvas.style.backgroundColor = colour
+    rect(0, 0, canvas.width, canvas.height)
+    fill(colour)
 } 
 // changes the canvas border colour, thickness and style
 function border(colour, style, widthpx) {
@@ -32,14 +34,15 @@ function circle(x, y, radius) {
     canvas.ctx.arc(x, y, radius, 0, 2*Math.PI)
 }
 // fills whatever is in the buffer with the given colour
-function fill(colour) {
+function fill(colour, opacity) {
+    canvas.ctx.globalAlpha = opacity || 1
     canvas.ctx.fillStyle = colour
     canvas.ctx.fill()
 }
 // does stroke 
-function draw(colour, lineWidth) {
-    this.lineWidth = lineWidth || 1
-    canvas.ctx.lineWidth = this.lineWidth
+function stroke(colour, opacity, line_width) {
+    canvas.ctx.globalAlpha = opacity || 1
+    canvas.ctx.lineWidth = line_width || 1
     canvas.ctx.strokeStyle = colour
     canvas.ctx.stroke()
 
@@ -71,8 +74,8 @@ function line(x1, y1, x2, y2) {
     canvas.ctx.lineTo(x2, y2)
 }
 // clears the canvas
-function clear() {
-    canvas.ctx.clearRect(0, 0, canvas.width, canvas.height)
+function canvasClear(x1, y1, x2, y2) {
+    canvas.ctx.clearRect(x1 || 0, y1 || 0, x2 || canvas.width, y2 || canvas.height)
 }
 // creates a path of points from a array of points
 function pointPath(points) {
@@ -92,12 +95,50 @@ function customCircle(x, y, sides, radius) {
     }
     pointPath(points)
 }
-// basic text writing funtion, NEEDS WORK!!!!!
-function write(text, size, x, y, font) {
-    this.x = x || 5
-    this.y = y || 30
-    this.size = size || 30
-    canvas.ctx.font = font || this.size+"px Arial"
-    console.log(canvas.ctx.font)
-    canvas.ctx.fillText(text, this.x, this.y)
+
+function translate_zero (x, y) {
+    canvas.ctx.translate(x, y)
+}
+
+function TextBox(x, y, font, font_size, width) {
+    this.x = x
+    this.y = y
+    this.max_width = width
+    this.buffer = "";
+    this.size = font_size
+    this.font = font
+    this.lines
+    
+
+    this.write = (text) => {
+        this.buffer += text
+        let regex = new RegExp('.{1,'+this.max_width+'}|S', 'g') 
+        this.buffer = this.buffer.match(regex)
+        this.lines = this.buffer.length
+        this.buffer = this.buffer.join('\n')
+        canvas.ctx.font = this.size+'px'+this.font
+        this.update(this.buffer)
+    }
+    this.writeln = (text) => {this.write(text); this.buffer += '\n'}
+    this.update = () => {
+        canvasClear()
+        let temp_buffer = ""
+        let line = 0
+        for (let i = 0; i < this.buffer.length; i++) {
+            let char = this.buffer[i]
+            switch(char) {
+                case '\n': {
+                    canvas.ctx.fillText(temp_buffer, this.x, this.y + (line * this.size));
+                    temp_buffer = ""
+                    line++ } break;
+                default: temp_buffer += char;break;
+            }
+        } 
+        canvas.ctx.fillText(temp_buffer, this.x, this.y + (line * this.size));
+    }
+    this.clear = () => {this.buffer = ""; this.update()}
+    this.border = () => {
+        rect(this.x, this.y - this.size, this.max_width * this.size, this.size*this.lines)
+        stroke("red")
+    }
 }
