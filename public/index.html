@@ -5,7 +5,7 @@
     <title>Basics of yahcal</title>
 </head>
 <body>
-    <h6> Version 0.0.2-9</h6>
+    <h6> Version 0.1.0-10</h6>
     <script src="./src/yahcal.js"></script>
     <script>
         NewCanvas(500, 500);
@@ -29,6 +29,62 @@
     </script><br>
     
     Page Done. Main Yahcal github at <a href="https://github.com/jack-cedar/yahcal">https://github.com/jack-cedar/yahcal</a><br>
+    
+    //initiate canvas  <br> 
+function NewCanvas(width, height) {  <br> 
+  <br> 
+// incorperates an existing canvas  <br> 
+function existingCanvas(id) {  <br> 
+  <br> 
+// changes the background colour of the canvas  <br> 
+function background(colour) {  <br> 
+  <br> 
+// changes the canvas border colour, thickness and style  <br> 
+function border(colour, style, widthpx) {  <br> 
+  <br> 
+// draws an ellipse with a center point and a width and height  <br> 
+function ellipse(x, y, width, height) {  <br> 
+  <br> 
+// draws a circle with a center point and a radius  <br> 
+function circle(x, y, radius) {  <br> 
+  <br> 
+// fills whatever is in the buffer with the given colour  <br> 
+function fill(colour, opacity) {  <br> 
+  <br> 
+// does stroke   <br> 
+function stroke(colour, opacity, line_width) {  <br> 
+  <br> 
+// Draws a standard rectangle with an x, y, and a height and width  <br> 
+function rect(x, y, width, height) {  <br> 
+  <br> 
+// Draws a rectangle based on 2 points, top left and bottom right corners.  <br> 
+function rect2p(x1, y1, x2, y2) {  <br> 
+  <br> 
+// draws a square with a given x, y, width and height  <br> 
+function square(x, y, size) {  <br> 
+  <br> 
+// fills a pixel with a given colour  <br> 
+function pixel(x, y, colour) {  <br> 
+  <br> 
+// draws a line from x1, y1 to x2, y2  <br> 
+function line(x1, y1, x2, y2) {  <br> 
+  <br> 
+// clears the canvas  <br> 
+function canvasClear(x1, y1, x2, y2) {  <br> 
+  <br> 
+// creates a path of points from a array of points  <br> 
+function pointPath(points) {  <br> 
+  <br> 
+// creates a circle with any number of sides  <br> 
+function customCircle(x, y, sides, radius) {  <br> 
+
+  <br> 
+//move the zero 
+function translate_zero (x, y) {  <br> 
+
+}  <br> 
+// make a textbox
+function TextBox(x, y, font, font_size, width) {  <br> 
     
 </body>
 </html>
