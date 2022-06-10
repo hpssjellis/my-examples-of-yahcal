@@ -1,14 +1,14 @@
 // creates a new canvas element with the given width and height
-function NewCanvas(width, height) {
+function NewCanvas(width, height, id) {
     this.canvas = document.createElement("canvas");
     this.canvas.width = width
     this.canvas.height = height
     this.canvas.ctx = this.canvas.getContext('2d')
-    
+    this.canvas.id = id || "myCanvas"
     document.body.appendChild(this.canvas)
 }
 // incorperates an existing canvas
-function existingCanvas(id) {
+function useCanvas(id) {
     this.canvas = document.getElementById(id)
     this.canvas.ctx = this.canvas.getContext('2d')
 }
