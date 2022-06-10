@@ -110,7 +110,7 @@ function translateZero (x, y) {
     canvas.ctx.translate(x, y)
 }
 
-function Textbox(x, y, font, font_size, width) {
+function Textbox(x, y, font, font_size, width, textColour) {
     this.x = x
     this.y = y
     this.max_width = width
@@ -118,6 +118,7 @@ function Textbox(x, y, font, font_size, width) {
     this.size = font_size
     this.font = font
     this.lines
+    this.textColour = textColour 
     
 
     this.write = (text) => {
@@ -126,11 +127,12 @@ function Textbox(x, y, font, font_size, width) {
         this.buffer = this.buffer.match(regex)
         this.lines = this.buffer.length
         this.buffer = this.buffer.join('\n')
-        canvas.ctx.font = this.size+'px'+this.font
+        canvas.ctx.font = this.size+'px '+this.font
         this.update(this.buffer)
     }
     this.writeln = (text) => {this.write(text); this.buffer += '\n'}
     this.update = () => {
+         canvas.ctx.fillStyle = this.textColour
         let temp_buffer = ""
         let line = 0
         for (let i = 0; i < this.buffer.length; i++) {
@@ -143,6 +145,7 @@ function Textbox(x, y, font, font_size, width) {
                 default: temp_buffer += char;break;
             }
         } 
+       
         canvas.ctx.fillText(temp_buffer, this.x, this.y + (line * this.size));
     }
     this.clear = () => {this.buffer = ""; this.update()}
