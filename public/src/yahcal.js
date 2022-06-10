@@ -19,9 +19,10 @@ function background(colour) {
 } 
 // changes the canvas border colour, thickness and style
 function border(colour, style, widthpx) {
-    canvas.style.borderStyle = style
-    canvas.style.borderColor = colour
-    canvas.style.borderWidth = widthpx+"px"
+    let width = widthpx || 1
+    canvas.style.borderStyle = style || solid
+    canvas.style.borderColor = colour || "black"
+    canvas.style.borderWidth = width+"px"
 }
 // draws an ellipse with a center point and a width and height
 function ellipse(x, y, width, height) {
