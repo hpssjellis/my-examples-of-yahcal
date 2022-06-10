@@ -1,14 +1,14 @@
 // creates a new canvas element with the given width and height
-function NewCanvas(width, height) {
+function NewCanvas(width, height, id) {
     this.canvas = document.createElement("canvas");
     this.canvas.width = width
     this.canvas.height = height
     this.canvas.ctx = this.canvas.getContext('2d')
-    
+    this.canvas.id = id || "myCanvas" 
     document.body.appendChild(this.canvas)
 }
 // incorperates an existing canvas
-function existingCanvas(id) {
+function useCanvas(id) {
     this.canvas = document.getElementById(id)
     this.canvas.ctx = this.canvas.getContext('2d')
 }
@@ -19,9 +19,10 @@ function background(colour) {
 } 
 // changes the canvas border colour, thickness and style
 function border(colour, style, widthpx) {
-    canvas.style.borderStyle = style
-    canvas.style.borderColor = colour
-    canvas.style.borderWidth = widthpx+"px"
+    let width = widthpx || 1 
+    canvas.style.borderStyle = style || "solid"
+    canvas.style.borderColor = colour || "black"
+    canvas.style.borderWidth = width+"px"
 }
 // draws an ellipse with a center point and a width and height
 function ellipse(x, y, width, height) {
@@ -80,27 +81,36 @@ function canvasClear(x1, y1, x2, y2) {
 // creates a path of points from a array of points
 function pointPath(points) {
     canvas.ctx.beginPath()
-    canvas.ctx.moveTo(points[0][0], points[0][1])
-    for (var i = 1; i < points.length; i++) {
-            canvas.ctx.lineTo(points[i][0], points[i][1])
+    canvas.ctx.moveTo(points[0], points[1])
+    for (var i = 0; i < points.length; i+=2) {
+        canvas.ctx.lineTo(points[i], points[i+1])
     }
-    canvas.ctx.lineTo(points[0][0], points[0][1])
+    //canvas.ctx.lineTo(points[0], points[1])
+}
+// Similar to pointPath exept it returns to the first point at the end
+function pointLoop(points) {
+    canvas.ctx.beginPath()
+    canvas.ctx.moveTo(points[0], points[1])
+    for (var i = 0; i < points.length; i+=2) {
+        canvas.ctx.lineTo(points[i], points[i+1])
+    }
+    canvas.ctx.lineTo(points[0], points[1])
 }
 // creates a circle with any number of sides
 function customCircle(x, y, sides, radius) {
     var points = []
     for (var i = 0; i < sides; i++) {
         var angle = i * 2 * Math.PI / sides
-        points.push([x + radius * Math.cos(angle), y + radius * Math.sin(angle)])
+        points.push(x + radius * Math.cos(angle), y + radius * Math.sin(angle))
     }
-    pointPath(points)
+    pointLoop(points)
 }
 
-function translate_zero (x, y) {
+function translateZero (x, y) {
     canvas.ctx.translate(x, y)
 }
 
-function TextBox(x, y, font, font_size, width) {
+function Textbox(x, y, font, font_size, width) {
     this.x = x
     this.y = y
     this.max_width = width
@@ -121,7 +131,6 @@ function TextBox(x, y, font, font_size, width) {
     }
     this.writeln = (text) => {this.write(text); this.buffer += '\n'}
     this.update = () => {
-        canvasClear()
         let temp_buffer = ""
         let line = 0
         for (let i = 0; i < this.buffer.length; i++) {
