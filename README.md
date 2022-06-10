@@ -15,6 +15,12 @@ Creating a Canvas:
 // the NewCanvas() function appends a new canvas element to the body of your html 
 // all it needs from you is to give it a width and a height for the canvas you want to create
 NewCanvas(500, 500)
+// you can set the background colour of a canvas with the background() function
+background("lightblue")
+// And to add a border use the border() function.
+// it takes 3 arguments, border colour, border style, and the width of the border in pixels
+// it also has a default value of a solid black border with a width of 1
+border("red", "dotted", 5)
 ```
 Text Boxes:
 ```javascript
